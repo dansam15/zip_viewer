@@ -34,12 +34,19 @@ if(ANDROID)
     mainwindow.ui
   )
 else()
+  add_subdirectory(minizip-ng/)
+
+  set(MZ_BZIP2=FALSE)
+  set(MZ_LZMA=FALSE)
+  set(MZ_ZLIB=FALSE)
+
   add_executable(zip_viewer
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
   )
+target_link_libraries(zip_viewer PRIVATE minizip)
 endif()
 
 target_link_libraries(zip_viewer PRIVATE Qt5::Widgets)
