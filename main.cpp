@@ -105,21 +105,33 @@ int32_t minizip_list(const char *path, std::vector<QStringList>& file_list) {
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    if (argc != 2)
-    {
-        std::cerr << "The format of run is \"zip_viewer ${PATH_TO_ZIP}\"\n";
-        exit(1);
+
+    try {
+
+        if (argc != 2)
+        {
+            std::cerr << "The format of run is \"zip_viewer ${PATH_TO_ZIP}\"\n";
+            exit(1);
+        }
+        const char* path = argv[1];
+
+        std::vector<QStringList> file_list;
+        minizip_list(path, file_list);
+
+        QTreeView* tree_view = new QTreeView;
+        TreeModel* tree_model = new TreeModel(file_list);
+
+        tree_view->setModel(tree_model);
+        tree_view->show();
     }
-    const char* path = argv[1];
-
-    std::vector<QStringList> file_list;
-    minizip_list(path, file_list);
-
-    QTreeView* tree_view = new QTreeView;
-    TreeModel* tree_model = new TreeModel(file_list);
-
-    tree_view->setModel(tree_model);
-    tree_view->show();
+    catch (const std::exception& e)
+    {
+        std::cerr << e.what() << "\n";
+    }
+    catch (...)
+    {
+        std::cerr << "unknown exception\n";
+    }
 
     return a.exec();
 }
