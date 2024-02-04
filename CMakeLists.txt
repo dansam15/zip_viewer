@@ -9,7 +9,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "-fpie")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check http://doc.qt.io/qt-5/deployment-android.html for more information.
@@ -26,27 +28,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-if(ANDROID)
-  add_library(zip_viewer SHARED
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-  )
-else()
+#if()
+#else()
+set(MZ_BZIP2=FALSE)
+set(MZ_LZMA=FALSE)
+set(MZ_ZLIB=FALSE)
+
   add_subdirectory(minizip-ng/)
 
-  set(MZ_BZIP2=FALSE)
-  set(MZ_LZMA=FALSE)
-  set(MZ_ZLIB=FALSE)
-
   add_executable(zip_viewer
+    treemodel.cpp
     main.cpp
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-  )
-target_link_libraries(zip_viewer PRIVATE minizip)
-endif()
+     )
+
+  #target_include_directories(zip_viewer PRIVATE minizip-ng/)
+  target_link_libraries(zip_viewer PRIVATE minizip)
+#endif()
 
 target_link_libraries(zip_viewer PRIVATE Qt5::Widgets)
