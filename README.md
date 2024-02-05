@@ -1,6 +1,9 @@
 # zip_viewer
 Cross-platform zip viewer
 
+After cloning, use (in project dir)
+>git submodule update --init minizip-ng/
+
 Buid (in project dir):
 >mkdir dbg
 >cd dbg
