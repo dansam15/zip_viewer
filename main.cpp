@@ -78,10 +78,10 @@ int32_t minizip_list(const char *path, std::vector<QStringList>& file_list) {
 
             char str[1000];
 
-            sprintf(str, "%ld", file_info->compressed_size);
+            sprintf(str, "%d", file_info->compressed_size);
             entry << str;
 
-            sprintf(str, "%ld", file_info->uncompressed_size);
+            sprintf(str, "%d", file_info->uncompressed_size);
             entry << str;
 
             file_list.push_back(entry);
