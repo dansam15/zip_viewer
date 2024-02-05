@@ -72,6 +72,7 @@ int32_t minizip_list(const char *path, std::vector<QStringList>& file_list) {
         mz_zip_time_t_to_tm(file_info->modified_date, &tmu_date);
 
         // Read all entries
+        if (file_info->compressed_size) // subdirs are not showed
         {
             QStringList entry;
             entry << file_info->filename;
