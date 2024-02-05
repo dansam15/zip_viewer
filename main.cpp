@@ -10,6 +10,7 @@
 #include <QApplication>
 
 #include <iostream>
+#include <string>
 
 
 #include <QStringList>
@@ -116,21 +117,29 @@ int main(int argc, char *argv[])
         const char* path = argv[1];
 
         std::vector<QStringList> file_list;
-        minizip_list(path, file_list);
+        if (minizip_list(path, file_list))
+        {
+            throw std::runtime_error("zip parsing error\n");
+        }
 
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);
 
+        QSplitter* splitter = new QSplitter;
+
+        QTreeView *tree = new QTreeView(splitter);
         tree_view->setModel(tree_model);
         tree_view->show();
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << "\n";
+        return -1;
     }
     catch (...)
     {
         std::cerr << "unknown exception\n";
+        return -1;
     }
 
     return a.exec();
