@@ -1,17 +1,14 @@
-#include "mainwindow.h"
 
-#include "treemodel.hpp"
-
-#include <QtWidgets/QApplication>
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QFileSystemModel>
-#include <QtWidgets/QSplitter>
+
 #include <QDir>
 #include <QApplication>
 
 #include <iostream>
 #include <string>
 
+#include "treemodel.hpp"
 
 #include <QStringList>
 
@@ -126,10 +123,10 @@ int main(int argc, char *argv[])
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);
 
-        QSplitter* splitter = new QSplitter;
-
-        QTreeView *tree = new QTreeView(splitter);
         tree_view->setModel(tree_model);
+
+        tree_view->resizeColumnToContents(0);
+
         tree_view->show();
     }
     catch (const std::exception& e)

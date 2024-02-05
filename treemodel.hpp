@@ -11,15 +11,18 @@ class TreeModel : public QAbstractItemModel
     Q_OBJECT
 public:
     TreeModel(const std::vector<QStringList> &strings, QObject *parent = nullptr)
-        : QAbstractItemModel(parent), stringList_(strings) {}
+        : QAbstractItemModel(parent), stringList_(strings)
+    {
 
-    bool 	insertColumn(int column, const QModelIndex &parent = QModelIndex())
+    }
+
+    bool insertColumn(int column, const QModelIndex &parent = QModelIndex())
     {
         std::cerr << "Invalid insertColumns() usage for predefined case\n";
         return false;
     };
 
-    virtual bool 	insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override final
+    virtual bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override final
     {
         std::cerr << "Invalid insertColumns() usage for predefined case\n";
         return false;
@@ -31,9 +34,10 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const override;
 
-    virtual QModelIndex 	index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
+    virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override;
 
-    virtual QModelIndex 	parent(const QModelIndex &index) const override;
+    virtual QModelIndex parent(const QModelIndex &index) const override;
+
 private:
     std::vector<QStringList> stringList_;
 };

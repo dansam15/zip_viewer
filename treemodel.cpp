@@ -13,31 +13,17 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     if (index.row() >= stringList_.size())
         return QVariant();
 
-
     if (index.column() >=3)
         return QVariant();
 
     if (role == Qt::DisplayRole)
     {
-        if (index.column() == 0)
-        {
-            return stringList_.at(index.row()).at(0);
-        }
-        else if (index.column() == 1)
-        {
-            return stringList_.at(index.row()).at(1);
-        }
-        else if (index.column() == 2)
-        {
-            return stringList_.at(index.row()).at(2);
-        }
-        else
-        {
-            return QVariant();
-        }
+        return stringList_.at(index.row()).at(index.column());
     }
     else
+    {
         return QVariant();
+    }
 }
 
 QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
@@ -72,7 +58,8 @@ QVariant TreeModel::headerData(int section, Qt::Orientation orientation,
 
 QModelIndex 	TreeModel::index(int row, int column, const QModelIndex &parent) const
 {
-    return createIndex(row, column);
+   return parent.isValid() ? QModelIndex() : createIndex(row, column); // without hierarchy due to restrictions
+    //return createIndex(row, column);
 }
 
 int 	TreeModel::columnCount(const QModelIndex &parent) const
