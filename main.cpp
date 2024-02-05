@@ -108,12 +108,12 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     try {
-
         if (argc != 2)
         {
             std::cerr << "The format of run is \"zip_viewer ${PATH_TO_ZIP}\"\n";
             exit(1);
         }
+
         const char* path = argv[1];
 
         std::vector<QStringList> file_list;

@@ -1,0 +1,163 @@
+{
+	"BUILD_DIR" : "/home/samir_d/zip_viewer/dbg/minizip-ng/minizip_autogen",
+	"CMAKE_BINARY_DIR" : "/home/samir_d/zip_viewer/dbg",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/samir_d/zip_viewer/dbg/minizip-ng",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/samir_d/zip_viewer/minizip-ng",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/samir_d/zip_viewer",
+	"HEADERS" : 
+	[
+		[
+			"/home/samir_d/zip_viewer/dbg/minizip-ng/ioapi.h",
+			"MU",
+			"EJRQKI7XPS/moc_ioapi.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/dbg/minizip-ng/unzip.h",
+			"MU",
+			"EJRQKI7XPS/moc_unzip.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/dbg/minizip-ng/zip.h",
+			"MU",
+			"EJRQKI7XPS/moc_zip.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz.h",
+			"MU",
+			"EWIEGA46WW/moc_mz.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_compat.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_compat.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_crypt.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_crypt.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_os.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_os.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm_buf.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm_buf.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm_mem.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm_mem.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm_os.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm_os.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm_pkcrypt.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm_pkcrypt.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_strm_split.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_strm_split.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_zip.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_zip.cpp"
+		],
+		[
+			"/home/samir_d/zip_viewer/minizip-ng/mz_zip_rw.h",
+			"MU",
+			"EWIEGA46WW/moc_mz_zip_rw.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/samir_d/zip_viewer/dbg/minizip-ng/minizip_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/samir_d/zip_viewer/dbg/minizip-ng/minizip_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"HAVE_GETRANDOM",
+		"HAVE_ICONV",
+		"HAVE_INTTYPES_H",
+		"HAVE_PKCRYPT",
+		"HAVE_STDINT_H",
+		"MZ_ZIP_NO_COMPRESSION",
+		"MZ_ZIP_NO_CRYPTO",
+		"MZ_ZIP_NO_DECOMPRESSION",
+		"_BSD_SOURCE",
+		"_DEFAULT_SOURCE",
+		"_POSIX_C_SOURCE=200809L"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/samir_d/zip_viewer/dbg/minizip-ng",
+		"/home/samir_d/zip_viewer/minizip-ng",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/9/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu",
+		"/usr/include"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/c++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/samir_d/zip_viewer/dbg/minizip-ng/minizip_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 4,
+	"PARSE_CACHE_FILE" : "/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/minizip_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"SETTINGS_FILE" : "/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/minizip_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_compat.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_crypt.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_os.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_os_posix.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm_buf.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm_mem.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm_os_posix.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm_pkcrypt.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_strm_split.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_zip.c", "MU" ],
+		[ "/home/samir_d/zip_viewer/minizip-ng/mz_zip_rw.c", "MU" ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,16 @@
+/home/samir_d/zip_viewer/dbg/CMakeFiles/install/strip.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/install/local.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/install.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/list_install_components.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/rebuild_cache.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/edit_cache.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/zip_viewer.dir
+/home/samir_d/zip_viewer/dbg/CMakeFiles/zip_viewer_autogen.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/install/strip.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/install/local.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/install.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/list_install_components.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/rebuild_cache.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/edit_cache.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/minizip.dir
+/home/samir_d/zip_viewer/dbg/minizip-ng/CMakeFiles/minizip_autogen.dir

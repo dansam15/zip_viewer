@@ -13,6 +13,10 @@ QVariant TreeModel::data(const QModelIndex &index, int role) const
     if (index.row() >= stringList_.size())
         return QVariant();
 
+
+    if (index.column() >=3)
+        return QVariant();
+
     if (role == Qt::DisplayRole)
     {
         if (index.column() == 0)
@@ -78,6 +82,6 @@ int 	TreeModel::columnCount(const QModelIndex &parent) const
 
 QModelIndex 	TreeModel::parent(const QModelIndex &index) const
 {
-    return index;
+    return QModelIndex();
 }
 

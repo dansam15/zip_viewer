@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+883897f2e580519dda3a872a9fe194bf CMakeFiles/zip_viewer_autogen
+533ebb002941bf619f2abb9d97aa931a minizip-ng/CMakeFiles/minizip_autogen
