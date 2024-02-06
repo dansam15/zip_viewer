@@ -17,56 +17,46 @@
 #include "mz_zip.h"
 #include "mz_zip_rw.h"
 
-int32_t minizip_list(const char *path, std::vector<QStringList>& file_list) {
+std::vector<QStringList> parse_zip(const std::string path)
+{
+    std::vector<QStringList> retval;
+
     mz_zip_file *file_info = NULL;
-    uint32_t ratio = 0;
     int32_t err = MZ_OK;
-    struct tm tmu_date;
-    const char *method = NULL;
-    char crypt = ' ';
-    void *reader = NULL;
 
-
-    reader = mz_zip_reader_create();
+    void *reader = mz_zip_reader_create();
     if (!reader)
-        return MZ_MEM_ERROR;
+    {
+        throw std::runtime_error("Failure with mz reader creating\n");
+    }
 
-    err = mz_zip_reader_open_file(reader, path);
-    if (err != MZ_OK) {
-        printf("Error %" PRId32 " opening archive %s\n", err, path);
+    err = mz_zip_reader_open_file(reader, path.c_str());
+    if (err != MZ_OK)
+    {
         mz_zip_reader_delete(&reader);
-        return err;
+
+        const std::string err_str = "Error" + std::to_string(err) + " opening archieve" + path;
+        throw std::runtime_error(err_str);
     }
 
     err = mz_zip_reader_goto_first_entry(reader);
-
-    if (err != MZ_OK && err != MZ_END_OF_LIST) {
-        printf("Error %" PRId32 " going to first entry in archive\n", err);
+    if (err != MZ_OK && err != MZ_END_OF_LIST)
+    {
         mz_zip_reader_delete(&reader);
-        return err;
+
+        const std::string err_str = "Error" + std::to_string(err) + " going to first entry in archive";
+        throw std::runtime_error(err_str);
     }
 
     /* Enumerate all entries in the archive */
     do {
         err = mz_zip_reader_entry_get_info(reader, &file_info);
 
-        if (err != MZ_OK) {
-            printf("Error %" PRId32 " getting entry info in archive\n", err);
-            break;
+        if (err != MZ_OK)
+        {
+            const std::string err_str = "Error" + std::to_string(err) + " getting entry info in archive";
+            throw std::runtime_error(err_str);
         }
-
-        ratio = 0;
-        if (file_info->uncompressed_size > 0)
-            ratio = (uint32_t)((file_info->compressed_size * 100) / file_info->uncompressed_size);
-
-        /* Display a '*' if the file is encrypted */
-        if (file_info->flag & MZ_ZIP_FLAG_ENCRYPTED)
-            crypt = '*';
-        else
-            crypt = ' ';
-
-        method = mz_zip_get_compression_method_string(file_info->compression_method);
-        mz_zip_time_t_to_tm(file_info->modified_date, &tmu_date);
 
         // Read all entries
         if (file_info->compressed_size) // subdirs are not showed
@@ -82,23 +72,29 @@ int32_t minizip_list(const char *path, std::vector<QStringList>& file_list) {
             sprintf(str, "%ld", file_info->uncompressed_size);
             entry << str;
 
-            file_list.push_back(entry);
+            retval.push_back(entry);
         }
 
         err = mz_zip_reader_goto_next_entry(reader);
 
-        if (err != MZ_OK && err != MZ_END_OF_LIST) {
+        if (err != MZ_OK && err != MZ_END_OF_LIST)
+        {
             printf("Error %" PRId32 " going to next entry in archive\n", err);
-            break;
+            const std::string err_str = "Error" + std::to_string(err) + " going to next entry in archive";
+            throw std::runtime_error(err_str);
         }
-    } while (err == MZ_OK);
+    }
+    while (err == MZ_OK);
 
     mz_zip_reader_delete(&reader);
 
-    if (err == MZ_END_OF_LIST)
-        return MZ_OK;
+    if (err != MZ_END_OF_LIST)
+    {
+        const std::string err_str = "Error" + std::to_string(err) + " with archieve parsing";
+        throw std::runtime_error(err_str);
+    }
 
-    return err;
+    return retval;
 }
 
 int main(int argc, char *argv[])
@@ -112,13 +108,9 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
-        const char* path = argv[1];
+        const std::string zip_path = argv[1];
 
-        std::vector<QStringList> file_list;
-        if (minizip_list(path, file_list))
-        {
-            throw std::runtime_error("zip parsing error\n");
-        }
+        std::vector<QStringList> file_list = parse_zip(zip_path);
 
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);

@@ -39,7 +39,7 @@ public:
     virtual QModelIndex parent(const QModelIndex &index) const override;
 
 private:
-    std::vector<QStringList> stringList_;
+    std::vector<QStringList> stringList_; // \todo make another (hier.) structure
 };
 
 #endif // TREEMODEL_HPP
