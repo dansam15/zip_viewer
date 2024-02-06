@@ -1,23 +1,25 @@
 
+#include <QApplication>
+
 #include <QtWidgets/QTreeView>
 #include <QtWidgets/QFileSystemModel>
 
-#include <QDir>
-#include <QApplication>
+#include <QStringList>
+
+#include <filesystem>
+namespace fs = std::filesystem;
 
 #include <iostream>
 #include <string>
 
 #include "treemodel.hpp"
 
-#include <QStringList>
-
 #include "mz.h"
 #include "mz_strm.h"
 #include "mz_zip.h"
 #include "mz_zip_rw.h"
 
-std::vector<QStringList> parse_zip(const std::string path)
+std::vector<QStringList> parse_zip(const std::string& path)
 {
     std::vector<QStringList> retval;
 
@@ -27,7 +29,7 @@ std::vector<QStringList> parse_zip(const std::string path)
     void *reader = mz_zip_reader_create();
     if (!reader)
     {
-        throw std::runtime_error("Failure with mz reader creating\n");
+        throw std::runtime_error("Error mz reader creating\n");
     }
 
     err = mz_zip_reader_open_file(reader, path.c_str());
@@ -35,7 +37,7 @@ std::vector<QStringList> parse_zip(const std::string path)
     {
         mz_zip_reader_delete(&reader);
 
-        const std::string err_str = "Error" + std::to_string(err) + " opening archieve" + path;
+        const std::string err_str = "Error" + std::to_string(err) + " opening archieve " + path;
         throw std::runtime_error(err_str);
     }
 
@@ -59,10 +61,14 @@ std::vector<QStringList> parse_zip(const std::string path)
         }
 
         // Read all entries
-        if (file_info->compressed_size) // subdirs are not showed
+        if (file_info->compressed_size) // subdirs are not showed \todo summary size?
         {
             QStringList entry;
             entry << file_info->filename;
+
+            // \todo use for structure hierarchy?
+            //const fs::path file_path(file_info->filename);
+            //std::cout << "FILE " << file_path.parent_path() << "\n";
 
             char str[1000];
 
@@ -79,7 +85,6 @@ std::vector<QStringList> parse_zip(const std::string path)
 
         if (err != MZ_OK && err != MZ_END_OF_LIST)
         {
-            printf("Error %" PRId32 " going to next entry in archive\n", err);
             const std::string err_str = "Error" + std::to_string(err) + " going to next entry in archive";
             throw std::runtime_error(err_str);
         }
@@ -108,9 +113,8 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
-        const std::string zip_path = argv[1];
-
-        std::vector<QStringList> file_list = parse_zip(zip_path);
+        const fs::path zip_path(argv[1]);
+        std::vector<QStringList> file_list = parse_zip(zip_path.string());
 
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);

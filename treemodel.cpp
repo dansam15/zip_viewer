@@ -1,5 +1,17 @@
 #include "treemodel.hpp"
 
+bool TreeModel::insertColumn(int column, const QModelIndex &parent)
+{
+    throw std::runtime_error("Invalid insertColumn() usage for predefined case");
+    return false;
+};
+
+bool TreeModel::insertColumns(int column, int count, const QModelIndex &parent)
+{
+    throw std::runtime_error("Invalid insertColumns() usage for predefined case");
+    return false;
+};
+
 int TreeModel::rowCount(const QModelIndex &parent) const
 {
     return stringList_.size();
