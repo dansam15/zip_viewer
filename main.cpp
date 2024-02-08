@@ -19,9 +19,9 @@ namespace fs = std::filesystem;
 #include "mz_zip.h"
 #include "mz_zip_rw.h"
 
-std::vector<QStringList> parse_zip(const std::string& path)
+std::vector<TreeModel::ZipEntry> parse_zip(const std::string& path)
 {
-    std::vector<QStringList> retval;
+    std::vector<TreeModel::ZipEntry> retval;
 
     mz_zip_file *file_info = NULL;
     int32_t err = MZ_OK;
@@ -60,26 +60,9 @@ std::vector<QStringList> parse_zip(const std::string& path)
             throw std::runtime_error(err_str);
         }
 
-        // Read all entries
-        if (file_info->compressed_size) // subdirs are not showed \todo summary size?
-        {
-            QStringList entry;
-            entry << file_info->filename;
+        // Read entry
+        retval.emplace_back(file_info->filename, file_info->compressed_size, file_info->uncompressed_size);
 
-            // \todo use for structure hierarchy?
-            //const fs::path file_path(file_info->filename);
-            //std::cout << "FILE " << file_path.parent_path() << "\n";
-
-            char str[1000];
-
-            sprintf(str, "%ld", file_info->compressed_size);
-            entry << str;
-
-            sprintf(str, "%ld", file_info->uncompressed_size);
-            entry << str;
-
-            retval.push_back(entry);
-        }
 
         err = mz_zip_reader_goto_next_entry(reader);
 
@@ -113,8 +96,9 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
+
         const fs::path zip_path(argv[1]);
-        std::vector<QStringList> file_list = parse_zip(zip_path.string());
+        std::vector<TreeModel::ZipEntry> file_list = parse_zip(zip_path.string());
 
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);
