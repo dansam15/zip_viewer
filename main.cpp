@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 #include "mz_zip.h"
 #include "mz_zip_rw.h"
 
-std::vector<TreeModel::ZipEntry> parse_zip(const std::string& path)
+std::vector<TreeModel::ZipEntry> parse_zip(const fs::path& path)
 {
     std::vector<TreeModel::ZipEntry> retval;
 
@@ -32,12 +32,12 @@ std::vector<TreeModel::ZipEntry> parse_zip(const std::string& path)
         throw std::runtime_error("Error mz reader creating\n");
     }
 
-    err = mz_zip_reader_open_file(reader, path.c_str());
+    err = mz_zip_reader_open_file(reader, path.string().c_str());
     if (err != MZ_OK)
     {
         mz_zip_reader_delete(&reader);
 
-        const std::string err_str = "Error" + std::to_string(err) + " opening archieve " + path;
+        const std::string err_str = "Error" + std::to_string(err) + " opening archieve " + path.string();
         throw std::runtime_error(err_str);
     }
 
@@ -96,9 +96,8 @@ int main(int argc, char *argv[])
             exit(1);
         }
 
-
         const fs::path zip_path(argv[1]);
-        std::vector<TreeModel::ZipEntry> file_list = parse_zip(zip_path.string());
+        std::vector<TreeModel::ZipEntry> file_list = parse_zip(zip_path);
 
         QTreeView* tree_view = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);

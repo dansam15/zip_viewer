@@ -9,7 +9,6 @@
 class TreeItem
 {
 public:
-    explicit TreeItem(const std::array<QString, 3> &data, TreeItem *parentItem = nullptr);
     explicit TreeItem(const QString& path, const QString& comp_size,
                       const QString& uncomp_size, TreeItem *parentItem = nullptr);
     ~TreeItem();
@@ -22,6 +21,7 @@ public:
     QVariant data(int column) const;
     int row() const;
     TreeItem *parentItem();
+
 // \fixme revert
 //private:
     QVector<TreeItem*> m_childItems;
