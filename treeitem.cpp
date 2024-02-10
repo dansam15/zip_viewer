@@ -8,6 +8,11 @@ TreeItem::TreeItem(const QString& path, const QString& comp_size,
    m_itemData = {path, comp_size, uncomp_size};
 }
 
+QString TreeItem::fullPath() const
+{
+   return m_itemData[0];
+}
+
 TreeItem::~TreeItem()
 {
     qDeleteAll(m_childItems);

@@ -22,8 +22,9 @@ public:
     int row() const;
     TreeItem *parentItem();
 
-// \fixme revert
-//private:
+    QString fullPath() const;
+
+ private:
     QVector<TreeItem*> m_childItems;
     std::array<QString, 3> m_itemData;
     TreeItem *m_parentItem;
