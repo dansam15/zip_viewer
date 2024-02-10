@@ -59,13 +59,19 @@ static bool is_subpath(const fs::path& path, const fs::path& base)
     return parent == base;
 }
 
+bool TreeModel::isRootDir(const TreeItem * dir) const
+{
+    return dir->fullPath().toStdString() == rootItem->fullPath().toStdString();
+}
+
 void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
 {
     for (size_t i = 0; i < data.size(); ++i)
     {
-      if (parent->fullPath().toStdString() == rootItem->fullPath().toStdString())
+      if (isRootDir(parent))
       {
-          if (is_complicated_path(parent_path(data[i].m_path) + "/"))
+          if (is_complicated_path(data[i].m_path.parent_path().string() + "/") ||
+               data[i].m_path.has_filename())
           {
               continue;
           }
@@ -80,7 +86,6 @@ void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
                                           QString::fromStdString(std::to_string(data[i].m_uncomp_size)),
                                           parent
                                           );
-
        parent->appendChild(cur_entry);
 
        if (data[i].m_path.has_filename())
@@ -161,11 +166,7 @@ int TreeModel::rowCount(const QModelIndex &parent) const
 
 int TreeModel::columnCount(const QModelIndex &parent) const
 {
-    if (parent.isValid())
-    {
-        return static_cast<TreeItem*>(parent.internalPointer())->columnCount();
-    }
-    return rootItem->columnCount();
+    return 3;
 }
 
 QVariant TreeModel::data(const QModelIndex &index, int role) const

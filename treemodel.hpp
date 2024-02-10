@@ -12,18 +12,6 @@
 
 #include <filesystem>
 namespace fs = std::filesystem;
-/*
-class ZipPath
-{
-    public:
-        ZipPath(std::string str): m_path(str) {};
-        fs::path parentPath() const;
-        fs::path parentPath() const;
-
-    private:
-        fs::path m_path;
-};
-*/
 
 class TreeModel : public QAbstractItemModel
 {
@@ -37,7 +25,6 @@ public:
             ZipEntry(std::string path, unsigned comp_size, unsigned uncomp_size):
                 m_path(path), m_comp_size(comp_size), m_uncomp_size(uncomp_size) {};
         private:
-            //ZipPath m_path;
             fs::path m_path;
             unsigned m_comp_size;
             unsigned m_uncomp_size;
@@ -56,6 +43,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
+    bool isRootDir(const TreeItem * dir) const;
     void setupModelData(std::vector<ZipEntry> data, TreeItem *parent);
 
     TreeItem *rootItem;

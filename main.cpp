@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 
         tree_view->setModel(tree_model);
 
+        tree_view->expandAll();
         tree_view->resizeColumnToContents(0);
 
         tree_view->show();
