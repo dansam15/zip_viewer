@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 #include "mz_zip.h"
 #include "mz_zip_rw.h"
 
-std::vector<TreeModel::ZipEntry> parse_zip(const fs::path& path)
+static std::vector<TreeModel::ZipEntry> parse_zip(const fs::path& path)
 {
     std::vector<TreeModel::ZipEntry> retval;
 
@@ -63,7 +63,6 @@ std::vector<TreeModel::ZipEntry> parse_zip(const fs::path& path)
         // Read entry
         retval.emplace_back(file_info->filename, file_info->compressed_size, file_info->uncompressed_size);
 
-
         err = mz_zip_reader_goto_next_entry(reader);
 
         if (err != MZ_OK && err != MZ_END_OF_LIST)
@@ -99,7 +98,7 @@ int main(int argc, char *argv[])
         const fs::path zip_path(argv[1]);
         std::vector<TreeModel::ZipEntry> file_list = parse_zip(zip_path);
 
-        QTreeView* tree_view = new QTreeView;
+        QTreeView* tree_view  = new QTreeView;
         TreeModel* tree_model = new TreeModel(file_list);
 
         tree_view->setModel(tree_model);

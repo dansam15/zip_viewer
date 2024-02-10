@@ -10,101 +10,78 @@ TreeModel::TreeModel(std::vector<ZipEntry> data, QObject *parent)
     setupModelData(data, rootItem);
 }
 
-// dur to fs::parent_path() return same path for dirs \todo more obvious
+// dur to fs::parent_path() return same path for dirs
+// this func return is level up dir
 static std::string parent_path(const fs::path& path)
 {
     std::string str = path;
     str = str.substr(0, str.find_last_of("/"));
     if (!path.has_filename())
         str = str.substr(0, str.find_last_of("/"));
-    return str;// + "/";
+    return str;
 }
 
-bool is_complicated_path(const fs::path& path)
-{ int count = 0;
+// check if nested more than 1 dir
+static bool is_complicated_path(const fs::path& path)
+{
+    int count = 0;
 
     for (int i = 0; i < path.string().size(); i++)
-      if (path.string()[i] == '/') count++;
+    {
+      if (path.string()[i] == '/')
+      {
+          count++;
+      }
+    }
 
     return count > 1;
+}
 
+static bool is_subpath(const fs::path& path, const fs::path& base)
+{
+    if (path.string() == base.string())
+    {
+        return false;
+    }
+
+    std::string parent;
+
+    if (path.has_filename())
+    {
+        parent = path.parent_path().string() + "/";
+    }
+    else
+    {
+        parent = parent_path(path) + "/";
+
+    }
+
+    return parent == base;
 }
 
 void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
 {
-   // std::cout << "TEST TreeModel::setupModelData\n";
-
-    std::string cur_dir = parent->m_itemData[0].toStdString();
-
-    /*
-    std::cout << parent->m_itemData[0].toStdString() << "\n";
-    std::cout << parent->m_itemData[1].toStdString() << "\n";
-    std::cout << parent->m_itemData[2].toStdString() << "\n";
-    if (parent->m_parentItem)
-        std::cout << "parent's parent:" << parent->m_parentItem->m_itemData[0].toStdString() << "\n";
-    for (auto it: parent->m_childItems)
-        std::cout << "parents child:" << it->m_itemData[0].toStdString() << "\n";
-
-    std::cout << "===" << "\n";
-*/
     for (size_t i = 0; i < data.size(); ++i)
     {
-/*
-        std::cout << "i = " << i << " << data[i].m_path.string()= " << data[i].m_path.string() << " for parent:" <<
-                     parent->m_itemData[0].toStdString() << "\n";
-        std::cout << "parent->m_itemData[0].toStdString()=" << parent->m_itemData[0].toStdString() << "\n";
-        std::cout << "rootItem->m_itemData[0].toStdString()=" << rootItem->m_itemData[0].toStdString() << "\n";
-       std::cout << "parent_path(data[i].m_path) = " << parent_path(data[i].m_path) << "\n";
-       std::cout << "(parent->m_itemData[0].toStdString() != rootItem->m_itemData[0].toStdString()) = "
-                 << (parent->m_itemData[0].toStdString() != rootItem->m_itemData[0].toStdString()) << "\n";
-*/
-      if(
-          parent->m_itemData[0].toStdString() != rootItem->m_itemData[0].toStdString()
-             &&  (
-              !data[i].m_path.has_filename() &&
-              parent->m_itemData[0].toStdString().find(data[i].m_path.string()) != std::string::npos
-              ||
-              data[i].m_path.has_filename() &&
-          parent->m_itemData[0].toStdString() != parent_path(data[i].m_path) + "/"
-
-          )
-          )
+      if (parent->fullPath().toStdString() == rootItem->fullPath().toStdString())
       {
-         // std::cout << "Continue 0\n\n";
+          if (is_complicated_path(parent_path(data[i].m_path) + "/"))
+          {
+              continue;
+          }
+      }
+      else if (!is_subpath(data[i].m_path, parent->fullPath().toStdString()))
+      {
           continue;
       }
 
-      if (
-              parent->m_itemData[0].toStdString() == rootItem->m_itemData[0].toStdString()
-                 &&
-             is_complicated_path(parent_path(data[i].m_path) + "/")
-
-         )
-       {
-         //  std::cout << "Continue 1\n\n";
-           continue;
-       }
-
-       if(
-          parent->m_itemData[0].toStdString() != rootItem->m_itemData[0].toStdString()
-             &&
-              !data[i].m_path.has_filename() &&
-               parent->m_itemData[0].toStdString() != parent_path(data[i].m_path) + "/"
-
-         )
-       {
-          // std::cout << "Continue 2\n\n";
-           continue;
-       }
-
-
        TreeItem *cur_entry = new TreeItem(QString::fromStdString(data[i].m_path.string()),
-                                              QString::fromStdString(std::to_string(data[i].m_comp_size)),
-                                              QString::fromStdString(std::to_string(data[i].m_uncomp_size)),
-                                              parent
-                                              );
+                                          QString::fromStdString(std::to_string(data[i].m_comp_size)),
+                                          QString::fromStdString(std::to_string(data[i].m_uncomp_size)),
+                                          parent
+                                          );
+
        parent->appendChild(cur_entry);
-      // std::cout << "Added " << data[i].m_path.string() << "\n";
 
        if (data[i].m_path.has_filename())
        {
