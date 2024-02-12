@@ -7,9 +7,9 @@ After cloning, use (in project dir)
 Buid (in project dir):
 >mkdir dbg
 >cd dbg
->/usr/bin/cmake .. -DCMAKE_INSTALL_PREFIX=./
+>cmake .. -DCMAKE_INSTALL_PREFIX=./
 
->make install
+>cmake --build./
 
 Run:
 >./zip_viewer ${PATH_TO_ZIP}

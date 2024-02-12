@@ -70,8 +70,7 @@ void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
     {
       if (isRootDir(parent))
       {
-          if (is_complicated_path(data[i].m_path.parent_path().string() + "/") ||
-               data[i].m_path.has_filename())
+          if (is_complicated_path(data[i].m_path.parent_path().string() + "/"))
           {
               continue;
           }
@@ -87,7 +86,8 @@ void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
                                           parent
                                           );
        parent->appendChild(cur_entry);
-
+	
+       std::cout <<"filename=" << data[i].m_path.filename() << "\n";
        if (data[i].m_path.has_filename())
        {
            continue;
