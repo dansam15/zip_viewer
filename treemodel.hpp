@@ -43,7 +43,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const override;
 
 private:
-    bool isRootDir(const TreeItem * dir) const;
+    bool isRootDir(const std::string dir) const;
     void setupModelData(std::vector<ZipEntry> data, TreeItem *parent);
 
     TreeItem *rootItem;

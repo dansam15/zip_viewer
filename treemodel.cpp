@@ -34,7 +34,7 @@ static bool is_complicated_path(const fs::path& path)
       }
     }
 
-    return count > 1;
+    return path.has_filename() ? count : count > 1; // files in subdirs of root or subdir of root with nets.level > 1
 }
 
 static bool is_subpath(const fs::path& path, const fs::path& base)
@@ -59,18 +59,18 @@ static bool is_subpath(const fs::path& path, const fs::path& base)
     return parent == base;
 }
 
-bool TreeModel::isRootDir(const TreeItem * dir) const
+bool TreeModel::isRootDir(const std::string dir) const
 {
-    return dir->fullPath().toStdString() == rootItem->fullPath().toStdString();
+    return dir == rootItem->fullPath().toStdString();
 }
 
 void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
 {
     for (size_t i = 0; i < data.size(); ++i)
     {
-      if (isRootDir(parent))
+      if (isRootDir(parent->fullPath().toStdString()))
       {
-          if (is_complicated_path(data[i].m_path.parent_path().string() + "/"))
+          if (is_complicated_path(data[i].m_path)) // check for root item subdirs and files
           {
               continue;
           }
@@ -85,9 +85,9 @@ void TreeModel::setupModelData(std::vector<ZipEntry> data, TreeItem *parent)
                                           QString::fromStdString(std::to_string(data[i].m_uncomp_size)),
                                           parent
                                           );
+
        parent->appendChild(cur_entry);
-	
-       std::cout <<"filename=" << data[i].m_path.filename() << "\n";
+
        if (data[i].m_path.has_filename())
        {
            continue;
