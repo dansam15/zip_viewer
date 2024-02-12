@@ -14,7 +14,7 @@ TreeModel::TreeModel(std::vector<ZipEntry> data, QObject *parent)
 // this func return is level up dir
 static std::string parent_path(const fs::path& path)
 {
-    std::string str = path;
+    std::string str = path.string();
     str = str.substr(0, str.find_last_of("/"));
     if (!path.has_filename())
         str = str.substr(0, str.find_last_of("/"));
